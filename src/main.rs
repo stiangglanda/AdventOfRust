@@ -7,9 +7,8 @@ fn main()-> Result<(), Box<dyn std::error::Error>> {
     println!("In file foo.txt");
 
     let lists= get_lists("./foo.txt")?;
-    //println!("{:?}",  lists.0);
-    //println!("{:?}",  lists.1);
-    println!("{}",  get_total_distance(lists));
+    println!("total_distance: {}",  get_total_distance(&lists));
+    println!("total_similarity_score: {}",  get_total_similarity_score(&lists));
 
     Ok(())
 
@@ -33,6 +32,14 @@ where P: AsRef<Path>, {
     Ok((list1,list2))
 }
 
-fn get_total_distance(lists:(Vec<u32>, Vec<u32>)) -> u32 {
+fn get_total_distance(lists:&(Vec<u32>, Vec<u32>)) -> u32 {
     lists.0.iter().zip(lists.1.iter()).map(|(&x,&y)| x.abs_diff(y)).sum()
+}
+
+fn get_total_similarity_score(lists:&(Vec<u32>, Vec<u32>)) -> u32 {
+    let mut result:u32=0;
+    for list in lists.0.iter() {
+        result += list * lists.1.iter().filter(|&x|x==list).count() as u32;
+    }
+    result
 }
