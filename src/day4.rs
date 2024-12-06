@@ -1,8 +1,8 @@
 use std::fs;
 use regex::Regex;
 
-pub fn day3() {
-    let text = fs::read_to_string("assets/day3.txt")
+pub fn day4() {
+    let text = fs::read_to_string("assets/day4.txt")
         .expect("Should have been able to read the file");
 
     part1(&text);
